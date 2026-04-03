@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Task</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 500px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #6c63ff; }
+        input, textarea { width: 100%; padding: 8px; margin: 5px 0; box-sizing: border-box; }
+        button { background: #6c63ff; color: white; padding: 8px 20px; border: none; cursor: pointer; }
+        a { color: #6c63ff; }
+    </style>
+</head>
+<body>
+    <h1>✏️ Edit Task</h1>
+    <form method="POST">
+        <input type="text" name="title" value="{{ task.title }}" required>
+        <textarea name="description" rows="3">{{ task.description or '' }}</textarea>
+        <label><input type="checkbox" name="done" {{ 'checked' if task.done }}> Mark as done</label><br><br>
+        <button type="submit">Save Changes</button>
+        <a href="/">Cancel</a>
+    </form>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Manager</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #6c63ff; }
+        form input, form textarea { width: 100%; padding: 8px; margin: 5px 0; box-sizing: border-box; }
+        form button { background: #6c63ff; color: white; padding: 8px 20px; border: none; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background: #6c63ff; color: white; }
+        .done { text-decoration: line-through; color: gray; }
+        a { color: #6c63ff; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <h1>📋 Task Manager</h1>
+    <form action="/add" method="POST">
+        <input type="text" name="title" placeholder="Task title" required>
+        <textarea name="description" placeholder="Description (optional)" rows="2"></textarea>
+        <button type="submit">Add Task</button>
+    </form>
+    <table>
+        <tr><th>Title</th><th>Description</th><th>Status</th><th>Actions</th></tr>
+        {% for task in tasks %}
+        <tr>
+            <td class="{{ 'done' if task.done }}">{{ task.title }}</td>
+            <td>{{ task.description or '-' }}</td>
+            <td>{{ '✅ Done' if task.done else '🔲 Pending' }}</td>
+            <td>
+                <a href="/edit/{{ task.id }}">Edit</a>
+                <a href="/delete/{{ task.id }}" onclick="return confirm('Delete this task?')">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% if not tasks %}
+        <tr><td colspan="4" style="text-align:center">No tasks yet. Add one above!</td></tr>
+        {% endif %}
+    </table>
+</body>
+</html>
