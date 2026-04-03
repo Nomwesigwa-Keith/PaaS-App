@@ -18,8 +18,10 @@ class Task(db.Model):
 @app.route('/')
 def index():
     tasks = Task.query.all()
-    return render_template('index.html', tasks=tasks)
-
+    total = len(tasks)
+    done = sum(1 for t in tasks if t.done)
+    pending = total - done
+    return render_template('index.html', tasks=tasks, total=total, done=done, pending=pending)
 @app.route('/add', methods=['POST'])
 def add():
     title = request.form.get('title')
